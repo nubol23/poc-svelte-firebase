@@ -1,6 +1,7 @@
 <script>
   import {getAuth, signInWithEmailAndPassword, signInWithPopup} from "firebase/auth";
   import { GoogleAuthProvider } from "firebase/auth";
+  import {getJWTAndRedirect} from "../../../utils/auth.ts";
   const provider = new GoogleAuthProvider();
 
   let email = "rafael.rvp98@gmail.com";
@@ -11,9 +12,10 @@
 
     const auth = getAuth()
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        console.log(userCredential.user);
+      .then(() => {
+        auth.currentUser.getIdToken().then((token) => {
+          getJWTAndRedirect(token);
+        })
       })
       .catch((error) => {
         console.log(error.code);
@@ -25,13 +27,10 @@
       const auth = getAuth()
 
       signInWithPopup(auth, provider)
-          .then((result) => {
-              // This gives you a Google Access Token. You can use it to access the Google API.
-              const credential = GoogleAuthProvider.credentialFromResult(result);
-              console.log(credential)
-              console.log(result)
-              // const token = credential.accessToken;
-              // const user = result.user;
+          .then(() => {
+            auth.currentUser.getIdToken().then((token) => {
+              getJWTAndRedirect(token);
+            })
           }).catch((error) => {
           // Handle Errors here.
           console.log(error.code);

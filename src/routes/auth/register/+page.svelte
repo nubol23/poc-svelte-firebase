@@ -1,5 +1,5 @@
 <script>
-  import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+  import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
   import {goto} from "$app/navigation";
 
   let email = "";
@@ -13,7 +13,13 @@
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential.user);
-        goto("login");
+        sendEmailVerification(auth.currentUser)
+          .then(() => {
+            goto("login");
+          })
+          .catch(() => {
+            console.log("could not send verification email")
+          })
       })
       .catch((error) => {
         console.log(error.code);
