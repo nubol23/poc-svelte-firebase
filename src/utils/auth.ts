@@ -18,7 +18,7 @@ export function getJWTAndRedirect(idToken: string, email: string, name = "") {
         accessToken: data.access_token
       })
       // Force external redirect
-      // window.location.href = `${env.PUBLIC_MAIN_APP_URL}?${queryParams.toString()}`
+      window.location.href = `${env.PUBLIC_MAIN_APP_URL}?${queryParams.toString()}`
     })
     .catch((error) => {
       console.log(error.error)
