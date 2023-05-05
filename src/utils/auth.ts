@@ -1,9 +1,13 @@
 import { env } from '$env/dynamic/public'
 
-export function getJWTAndRedirect(idToken: string) {
+export function getJWTAndRedirect(idToken: string, email: string, name = "") {
   return fetch(`${env.PUBLIC_AUTH_BACKEND_URL}/token`, {
     method: "POST",
-    body: JSON.stringify({id_token: idToken}),
+    body: JSON.stringify({
+      id_token: idToken,
+      email,
+      name,
+    }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -14,7 +18,7 @@ export function getJWTAndRedirect(idToken: string) {
         accessToken: data.access_token
       })
       // Force external redirect
-      window.location.href = `${env.PUBLIC_MAIN_APP_URL}?${queryParams.toString()}`
+      // window.location.href = `${env.PUBLIC_MAIN_APP_URL}?${queryParams.toString()}`
     })
     .catch((error) => {
       console.log(error.error)

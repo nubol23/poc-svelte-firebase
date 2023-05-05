@@ -14,7 +14,7 @@
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         auth.currentUser.getIdToken().then((token) => {
-          getJWTAndRedirect(token);
+          getJWTAndRedirect(token, auth.currentUser.email, auth.currentUser.displayName);
         })
       })
       .catch((error) => {
@@ -29,7 +29,7 @@
       signInWithPopup(auth, provider)
           .then(() => {
             auth.currentUser.getIdToken().then((token) => {
-              getJWTAndRedirect(token);
+              getJWTAndRedirect(token, auth.currentUser.email, auth.currentUser.displayName);
             })
           }).catch((error) => {
           // Handle Errors here.
