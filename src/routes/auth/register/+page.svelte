@@ -13,7 +13,7 @@
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential.user);
-        goto("auth/login");
+        goto("login");
       })
       .catch((error) => {
         console.log(error.code);
