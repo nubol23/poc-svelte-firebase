@@ -3,6 +3,9 @@
   import { GoogleAuthProvider } from "firebase/auth";
   import {getJWTAndRedirect} from "../../../utils/auth.ts";
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+      hd: "factored.ai",
+  })
 
   let email = "rafael.rvp98@gmail.com";
   let password = "password1234";
@@ -29,7 +32,8 @@
       signInWithPopup(auth, provider)
           .then(() => {
             auth.currentUser.getIdToken().then((token) => {
-              getJWTAndRedirect(token, auth.currentUser.email, auth.currentUser.displayName);
+                console.log(token)
+              // getJWTAndRedirect(token, auth.currentUser.email, auth.currentUser.displayName);
             })
           }).catch((error) => {
           // Handle Errors here.
